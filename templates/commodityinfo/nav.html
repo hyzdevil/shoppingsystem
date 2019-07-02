@@ -1,0 +1,23 @@
+{% load static %}
+<nav>
+    <img src="{% static 'images/logo.jpg' %}">
+    <ul class="ul1">
+        <li><a href="{% url 'commodityinfo:index' %}">主页</a></li>
+        {% for item in all_type %}
+            <li><a href="{% url 'commodityinfo:typedetail' item.id %}">{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <ul class="ul2">
+        {% if request.session.is_login %}
+            <li><a href="{% url 'userinfo:personal' %}">个人中心</a></li>
+            <li><a href="{% url 'userinfo:login_out' %}">退出</a></li>
+            <li>当前在线：{{ request.session.user_name }}</li>
+        {% else %}
+            <li><a href="{% url 'userinfo:register' %}">注册</a></li>
+            <li><a href="{% url 'userinfo:login' %}">登录</a></li>
+            {% if not request.session.is_login %}
+                <li><span>请登录:</span></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,55 @@
+{% extends "commodityinfo/base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/com/commoditydetail.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+{% endblock %}
+{% block title %}
+    购买-{{ commodity.title }}
+{% endblock %}
+{% block content %}
+    <form method="post" action="{% url 'cartinfo:place_order' %}">
+    {% csrf_token %}
+        <input type="hidden" name="goods_id" value="{{ commodity.id }}">
+        <div class="ldiv">
+            <img src="{{ commodity.picture.url }}" alt="{{ commodity.title }}">
+        </div>
+        <div class="rdiv">
+            <div class="s1">{{ commodity.title }}</div><br/>
+            <div class="s2">{{ commodity.detail }}</div><br/>
+            <div class="s3">￥{{ commodity.price }}</div>
+            <div class="s4">
+                <div class="buynum">
+                    <label>购买数量：</label>
+                    <input id="input" type="text" name="num" value="1">
+                </div>
+                <div class="car">
+                    <input class="buycar" type="submit" id="buy1" value="立即购买" >
+                    <div class="buycar" id="buy2">加入购物车</div>
+                </div>
+                {% if message %}
+                    {{ message }}
+                {% endif %}
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block VUE %}
+    <script type="text/javascript">
+        $('#buy2').click(function () {
+            $.ajaxSetup({data:{csrfmiddlewaretoken:'{{ csrf_token}}'}})
+            $.ajax({
+                type : "post",
+                url: {% url 'cartinfo:add_cart' %},
+                data : {
+                    "goods_id" : {{ commodity.id }},
+                    "num" : $("#input").val()
+                },
+                dataType : "json",
+                success : function(data){
+                    alert(data.message)
+                }
+            })
+        });
+    </script>
+{% endblock %}

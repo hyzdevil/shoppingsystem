@@ -1,0 +1,103 @@
+{% extends 'commodityinfo/base.html' %}
+{% load static %}
+{% block title %}新增收货地址{% endblock %}
+{% block css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/user/addsite.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="div">
+        <table>
+            <tr class="tr1">
+                <td>收件人姓名：</td>
+                <td><input type="text" name="name" id="aname" placeholder="请输入姓名"/></td>
+            </tr>
+            <tr class="tr2">
+                <td>收件人地址：</td>
+                <td>
+                    <select name="province" id="province">
+                        <option value="">请选择省份</option>
+                    </select>--
+                    <select name="city" id="city">
+                        <option value="">请选择城市</option>
+                    </select>--
+                    <select name="district" id="district">
+                        <option value="">请选择区/县</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><textarea name="detail" id="detail" placeholder="请输入详细地址"></textarea></td>
+            </tr>
+            <tr class="tr3">
+                <td>收件人手机：</td>
+                <td><input type="text" name="phone" id="phone" placeholder="请输入手机号"/></td>
+            </tr>
+            <tr class="tr4">
+                <td></td>
+                <td><button class="save">保存</button></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+{% block VUE %}
+    <script type="text/javascript">
+        $.get("{% url 'userinfo:getProvince' %}", function (data) {
+            for(var i = 0; i < data.provinces.length; i++){
+                $new = $("<option value="+data.provinces[i][0]+">"+data.provinces[i][1]+"</option>");
+                $("#province").append($new);
+            }
+        });
+        $("#province").change(function () {
+            $("#city").empty().append('<option value="">请选择城市</option>');
+            $("#district").empty().append('<option value="">请选择区/县</option>');
+            $.ajax({
+                url:'{% url "userinfo:getCity" %}',
+                type:'get',
+                data:{
+                    "city_id":$(this).val()
+                }
+            }).done(function (data) {
+                for(var i = 0;i < data.cities.length; i++){
+                    $new = $("<option value="+data.cities[i][0]+">"+data.cities[i][1]+"</option>");
+                    $("#city").append($new);
+                }
+            });
+        });
+        $("#city").change(function () {
+            $("#district").empty().append('<option value="">请选择区/县</option>');
+            $.ajax({
+                url:'{% url "userinfo:getDistrict" %}',
+                type:'get',
+                data:{
+                    "district_id":$(this).val()
+                }
+            }).done(function (data) {
+                for(var i = 0;i < data.district.length; i++){
+                    $new = $("<option value="+data.district[i][0]+">"+data.district[i][1]+"</option>");
+                    $("#district").append($new);
+                }
+            });
+        });
+        $('.save').click(function () {
+            $.ajaxSetup({data:{csrfmiddlewaretoken:'{{ csrf_token}}'}})
+            $.ajax({
+                type : "post",
+                url: {% url 'userinfo:add_address' %},
+                data : {
+                    "name": $("#aname").val(),
+                    "province": $("#province option:checked").text(),
+                    "city": $("#city option:checked").text(),
+                    "district": $("#district option:checked").text(),
+                    "detail": $("#detail").val(),
+                    "phone": $("#phone").val(),
+                 },
+                dataType : "json",
+                success : function(data){
+                    location.reload(true);
+                    alert(data.message);
+                }
+            })
+        })
+    </script>
+{% endblock %}

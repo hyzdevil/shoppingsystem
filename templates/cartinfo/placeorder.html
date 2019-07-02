@@ -1,0 +1,71 @@
+{% extends 'commodityinfo/base.html' %}
+{% load static %}
+{% block title %}确认订单{% endblock %}
+{% block css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/car/placeorder.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="div">
+        <div class="div1">
+            <span><strong>配送地址：</strong></span><br>
+            <span>{{ address.address }}&nbsp;（{{ address.aname }}&nbsp;收）&nbsp;{{ address.phone }}</span>
+        </div>
+        <div class="div2">
+            <table class="table">
+                <tr class="tr1">
+                    <td class="td3">商品名称</td>
+                    <td class="td4">商品价格</td>
+                    <td class="td5">购买数量</td>
+                    <td class="td6">金额</td>
+                </tr>
+                {% for good, num, cost in goods %}
+                    <tr height="60px">
+                        <td>
+                            <div style="display: none">{{ good.id }}</div>
+                            <img src="{{ good.picture.url }}" width="50px" height="50px" style="float: left"/>
+                            <div style="float: left;margin-top: 15px">{{ good.title }}</div>
+                        </td>
+                        <td style="color: red">￥{{ good.price }}</td>
+                        <td style="text-align: center">{{ num }}</td>
+                        <td style="color: red">￥<span>{{ cost }}</span></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="div3">
+            <span class="s2">合计（不含运费）：&nbsp;<span class="s4" id="priceTotal">￥{{ total_goods_amount }}</span></span>
+            <span class="s1">已选商品&nbsp;<span class="s4" id="numTotal">{{ total_count }}</span>&nbsp;件</span>
+            <span class="s3">提交订单</span>
+        </div>
+    </div>
+{% endblock %}
+{% block VUE %}
+    <script type="text/javascript">
+        function buygoods(){
+            var goods = [];
+            var tr = $(".table").find("tr");
+            for(var i = 1; i < tr.length; i++){
+                var id = $(tr[i]).find('td').eq(0)[0].children[0].innerHTML;
+                var num = $(tr[i]).find('td').eq(2).text();
+                var cost = $(tr[i]).find('td').eq(3)[0].children[0].innerHTML;
+                goods.push([parseInt(id), parseInt(num), parseFloat(cost)])
+            }
+            return goods;
+        }
+        $('.s3').click(function () {
+            $.ajaxSetup({data:{csrfmiddlewaretoken:'{{ csrf_token}}'}});
+            $.ajax({
+                type : "post",
+                url: {% url 'cartinfo:add_order' %},
+                traditional:true,
+                data : {
+                    "goods" : buygoods(),
+                },
+                dataType : "json",
+                success : function(data){
+                    alert(data.message)
+                }
+            })
+        });
+    </script>
+{% endblock %}

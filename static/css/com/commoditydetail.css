@@ -1,0 +1,82 @@
+.ldiv{
+    width: 600px;
+    height: 600px;
+    float: left;
+}
+.rdiv{
+    padding-top: 50px;
+    width: 500px;
+    height: 550px;
+    float: left;
+    margin-left: 30px;
+}
+.ldiv img{
+    width: 600px;
+    height: 600px;
+}
+.rdiv .s1{
+    font-size: 20px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+.rdiv .s2{
+    margin-top: 10px;
+    font-size: 14px;
+    margin-left: 20px;
+    color: #999999;
+}
+.rdiv .s3{
+    margin-top: 20px;
+    color: red;
+    margin-left: 20px;
+}
+.rdiv .s4{
+    width: 450px;
+    height: 300px;
+    margin: 50px auto;
+}
+.rdiv .s4 .buynum{
+    padding-top: 50px;
+    width: 400px;
+    height: 90px;
+    margin: 5px auto;
+}
+.buynum input{
+    width: 80px;
+    height: 20px;
+    margin: 0 10px;
+    border: 1px solid red;
+}
+.buynum button{
+    width: 20px;
+    height: 20px;
+}
+.buynum input,.buynum button,.buynum label{
+    display: block;
+    float: left;
+}
+.rdiv .s4 .car{
+    padding: 40px 45px;
+    width: 310px;
+    height: 60px;
+    margin: 5px auto;
+}
+.car .buycar{
+    width: 150px;
+    height: 40px;
+    display: inline-block;
+    text-align: center;
+    line-height: 40px;
+    font-size: 17px;
+    border: 1px solid red;
+}
+.car .buycar:hover{
+    cursor: pointer;
+}
+.car #buy1{
+    color: #f00000;
+}
+.car #buy2{
+    background-color: red;
+    color: #ffffff;
+}

@@ -1,0 +1,57 @@
+{% extends 'commodityinfo/base.html' %}
+{% load static %}
+{% block title %}收货地址{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/user/myaddress.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="dtop">
+        {% if message %}
+            {{ message }}
+        {% else %}
+            <table id="table" cellspacing="0">
+                <tr class="tr1">
+                    <td class="td1">收货人姓名</td>
+                    <td class="td2">收货人地址</td>
+                    <td class="td3">收货人电话</td>
+                    <td class="td4">操作</td>
+                </tr>
+                {% for name,address,phone in site_list %}
+                    <tr>
+                        <td>{{ name }}</td>
+                        <td>{{ address }}</td>
+                        <td>{{ phone }}</td>
+                        <td>
+                            <span class="delete" style="color: #2273c3;cursor: pointer">删除</span><br/>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+    <div class="dbut">
+        <a href="{% url 'userinfo:add_address' %}">新增收货地址</a>
+    </div>
+{% endblock %}
+{% block VUE %}
+    <script type="text/javascript">
+        $(".delete").click(function () {
+            var name = $(this).closest("tr").find("td").eq(0).text();
+            var address = $(this).closest("tr").find("td").eq(1).text();
+            $.ajaxSetup({data:{csrfmiddlewaretoken:'{{ csrf_token}}'}});
+            $.ajax({
+                type : "post",
+                url: {% url 'userinfo:delete_address' %},
+                data : {
+                    "recipients_name" : name,
+                    "recipients_address" : address,
+                },
+                dataType : "json",
+                success : function (data) {
+                    location.reload(true);
+                    alert(data.message);
+                }
+            })
+        })
+    </script>
+{% endblock %}

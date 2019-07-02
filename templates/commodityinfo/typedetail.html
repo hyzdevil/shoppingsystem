@@ -1,0 +1,14 @@
+{% extends "commodityinfo/index.html" %}
+{% load static %}
+{% block content %}
+    {% for each_type, all_commodity in type_commodity %}
+        <h2 style="text-align: center">{{ each_type.title }}</h2>
+        {% for item in all_commodity %}
+            <figure>
+                <img src="{{ item.picture.url }}" alt="{{ item.title }}"><br/>
+                <a href="{% url 'commodityinfo:commoditydetail' each_type.id item.id %}">{{ item.title }}</a><br/>
+                <span>￥{{ item.price }}</span>
+            </figure>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

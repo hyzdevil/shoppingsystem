@@ -1,0 +1,21 @@
+.div{
+    width: 30%;
+    height: 300px;
+    margin: 100px auto;
+}
+label{
+    color: red;
+}
+tr{
+    height: 40px;
+}
+input{
+    height: 25px;
+}
+span{
+    float: right;
+    margin-right: 10px;
+}
+.lasttr{
+    height: 60px;
+}

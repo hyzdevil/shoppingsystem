@@ -1,0 +1,65 @@
+.div{
+    width: 90%;
+    height: 600px;
+    margin: auto;
+}
+.div1{
+    width: 80%;
+    height: 50px;
+    margin: auto;
+    border: 1px solid red;
+}
+.div2{
+    width: 80%;
+    height: auto;
+    overflow: hidden;
+    margin: auto;
+    border: 1px solid green;
+}
+table{
+    margin: auto;
+}
+.div3{
+    width: 80%;
+    height: 60px;
+    margin: auto;
+    border: 1px solid red;
+}
+.tr1{
+    height: 50px;
+}
+.td3{
+    width: 300px;
+}
+.td4,.td5,.td6{
+    width: 140px;
+}
+.s1,.s2,.s3{
+    text-align: center;
+    line-height: 60px;
+}
+.s1{
+    width: 140px;
+    height: 60px;
+    float: right;
+    font-size: 14px;
+}
+.s2{
+    width: 260px;
+    height: 60px;
+    font-size: 14px;
+    float: right;
+}
+.s3{
+    color: #ffffff;
+    width: 120px;
+    height: 60px;
+    font-size: 17px;
+    clear: both;
+    float: right;
+    background-color: green;
+    cursor: pointer;
+}
+.s4{
+    color: red;
+}

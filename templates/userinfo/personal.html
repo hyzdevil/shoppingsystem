@@ -1,0 +1,13 @@
+{% extends 'commodityinfo/base.html' %}
+{% load static %}
+{% block title %}个人中心{% endblock %}
+{% block content %}
+    <div class="personal" style="width: 90%;height: 470px;">
+        <dl>
+            <dt>{{ request.session.user_name }}的个人中心</dt>
+            <dd><a href="{% url 'cartinfo:cart_info' %}">我的购物车</a></dd>
+            <dd><a href="{% url 'cartinfo:order' %}">我的订单</a></dd>
+            <dd><a href="{% url 'userinfo:user_address' %}">管理收货地址</a></dd>
+        </dl>
+    </div>
+{% endblock %}

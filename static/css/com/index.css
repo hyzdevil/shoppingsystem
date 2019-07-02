@@ -1,0 +1,35 @@
+figure{
+    text-align: center;
+    float: left;
+    width: 20%;
+    height: 300px;
+}
+figure img{
+    width: 200px;
+    height: 200px;
+}
+figure a{
+    text-decoration: none;
+}
+figure span{
+    color: red;
+}
+h2{
+    text-align: center;
+}
+.favorate{
+    width: 90%;
+    height: 320px;
+    clear: both;
+    margin: auto;
+}
+.cost_performance{
+    width: 90%;
+    height: 320px;
+    clear: both;
+    margin: auto;
+}
+.div{
+    color: red;
+    clear: both;
+}

@@ -1,0 +1,25 @@
+.dtop{
+    width: 90%;
+    height: 400px;
+    margin: auto;
+    border: 1px solid red;
+}
+.tr1{
+    height: 50px;
+}
+.td1,.td3,.td4{
+    width: 120px;
+}
+.td2{
+    width: 300px;
+}
+table{
+    margin: auto;
+}
+.dbut{
+    width: 90%;
+    height: 60px;
+    line-height: 60px;
+    margin: auto;
+    border: 1px solid green;
+}

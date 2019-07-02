@@ -1,0 +1,50 @@
+{% extends 'commodityinfo/base.html' %}
+{% load static %}
+{% block title %}{{ request.session.user_name }}--订单{% endblock %}
+{% block css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/car/order.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="div">
+        <div class="tdiv">
+            {% if message %}
+                {{ message }}
+            {% else %}
+                <table cellspacing="0">
+                    <tr style="height: 50px">
+                        <td style="width: 220px"><b>商品详情</b></td>
+                        <td style="width: 100px"><b>购买数量</b></td>
+                        <td style="width: 100px"><b>总价</b></td>
+                        <td style="width: 120px"><b>收件人姓名</b></td>
+                        <td style="width: 350px"><b>收件人地址</b></td>
+                        <td style="width: 150px"><b>收件人电话</b></td>
+                        <td style="width: 100px"><b>订单状态</b></td>
+                    </tr>
+                    {% for goods, each in order %}
+                        <tr style="height: 60px;line-height: 60px">
+                            <td>
+                                <img src="{{ goods.picture.url }}" width="50px" height="50px" style="float: left"/>
+                                <span>{{ goods.title }}</span>
+                            </td>
+                            <td>{{ each.acot }}</td>
+                            <td style="color: red">{{ each.acount }}</td>
+                            <td>{{ each.address_name }}</td>
+                            <td>{{ each.address }}</td>
+                            <td>{{ each.address_phone }}</td>
+                            <td>{{ each.get_order_status_display }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+        <div class="bdiv">
+            <div style="clear: both"><b>请选择支付方式</b></div>
+            <div class="paymethod">
+                <input type="radio" name="paymethod">支付宝支付
+                <input type="radio" name="paymethod">微信支付
+                <input type="radio" name="paymethod">银行卡支付
+            </div>
+            <div class="pay"><span class="s1">去支付</span></div>
+        </div>
+    </div>
+{% endblock %}

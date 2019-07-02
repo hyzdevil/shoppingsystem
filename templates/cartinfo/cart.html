@@ -1,0 +1,81 @@
+{% extends 'commodityinfo/base.html' %}
+{% load static %}
+{% block title %}{{ request.session.user_name }}--购物车{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/car/cart.css' %}">
+{% endblock %}
+{% block content %}
+    <form method="post" action="{% url 'cartinfo:place_order' %}">
+        {% csrf_token %}
+        {% if meaasge %}
+            <div>{{ meaasge }}</div>
+        {% else %}
+            <div class="cart">
+                <table class="table">
+                    <tr class="tr1">
+                        <td class="td1"></td>
+                        <td class="td3">商品名称</td>
+                        <td class="td4">商品价格</td>
+                        <td class="td5">购买数量</td>
+                        <td class="td6">金额</td>
+                        <td class="td7">操作</td>
+                    </tr>
+                    {% for each_goods, num, total_price in all_goods %}
+                        <tr height="60px" goods_id="{{ each_goods.id }}">
+                            <td><input type="checkbox" class="check-one check" name="goods_ids" value="{{ each_goods.id }}"/></td>
+                            <td>
+                                <img src="{{ each_goods.picture.url }}" width="50px" height="50px" style="float: left"/>
+                                <div style="float: left;margin-top: 15px">{{ each_goods.title }}</div>
+                            </td>
+                            <td style="color: red">￥{{ each_goods.price }}</td>
+                            <td style="text-align: center">{{ num }}</td>
+                            <td style="color: red">￥<span>{{ total_price }}</span></td>
+                            <td><a href="{% url 'cartinfo:delete_goods' each_goods.id %}">删除</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="cart1">
+                <div class="lc"><input type="checkbox" class="check-all check"/>全选</div>
+                <div class="rc">
+                    <input type="submit" class="s3" value="结算">
+                    <span class="s2">合计（不含运费）：&nbsp;<span class="s4" id="priceTotal">0.00</span></span>
+                    <span class="s1">已选商品&nbsp;<span class="s4" id="numTotal">0</span>&nbsp;件</span>
+                </div>
+            </div>
+        {% endif %}
+    </form>
+{% endblock %}
+{% block VUE %}
+    <script type="text/javascript">
+        var tr = $(".table").find("tr");
+        function getTotal(){
+            var num = 0;
+            var price = 0;
+            for(var i = 1; i < tr.length; i++){
+                if(tr[i].getElementsByTagName("input")[0].checked){
+                    num += 1;
+                    price += parseFloat(tr[i].cells[4].childNodes[1].innerHTML)
+                }
+            }
+            $("#numTotal").html(num);
+            $("#priceTotal").html(price.toFixed(2))
+        }
+        function buygoods(){
+            var goods = [];
+            che = $(".check");
+            for(var i = 0; i < che.length-1; i++){
+                if(che[i].checked){
+                    goods.push($(che[i]).closest("tr").find("td").eq(1)[0].innerText)
+                }
+            }
+            return goods;
+        }
+        $(".check").click(function(){
+            if(this.className === "check-all check"){
+                $(".check").prop("checked",this.checked)
+            }
+            getTotal()
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,67 @@
+.cart{
+    width: 90%;
+    height: 400px;
+    border: 1px solid red;
+    margin: auto;
+}
+.cart1{
+    width: 90%;
+    height: 60px;
+    margin: auto;
+    border: 1px solid green;
+}
+table{
+    margin: auto;
+}
+.tr1{
+    height: 50px;
+}
+.td2{
+    width: 80px;
+}
+.td3{
+    width: 300px;
+}
+.td4,.td5,.td6,.td7{
+    width: 140px;
+}
+.lc{
+    float: left;
+    width: 100px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+}
+.rc{
+    float: right;
+    width: 500px;
+    height: 60px;
+}
+.s1,.s2,.s3{
+    text-align: center;
+    line-height: 60px;
+}
+.s1{
+    width: 140px;
+    height: 60px;
+    float: right;
+    font-size: 14px;
+}
+.s2{
+    width: 260px;
+    height: 60px;
+    font-size: 14px;
+    float: right;
+}
+.s3{
+    color: #ffffff;
+    width: 80px;
+    height: 60px;
+    font-size: 20px;
+    float: right;
+    background-color: #666666;
+    cursor: pointer;
+}
+.s4{
+    color: red;
+}
